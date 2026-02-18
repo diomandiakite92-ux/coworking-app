@@ -1,0 +1,75 @@
+openapi: 3.0.0
+info:
+  title: Coworking API
+  version: 1.0.0
+servers:
+  - url: https://coworking-backend-cy89.onrender.com
+
+paths:
+  /ping:
+    get:
+      summary: Test API
+      responses:
+        "200":
+          description: OK
+
+  /reservations:
+    get:
+      summary: Liste des réservations
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Reservation"
+
+    post:
+      summary: Créer une réservation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReservationInput"
+      responses:
+        "201":
+          description: Créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reservation"
+
+components:
+  schemas:
+    Reservation:
+      type: object
+      properties:
+        _id:
+          type: string
+        salle:
+          type: string
+        date:
+          type: string
+          example: "2026-02-18"
+        heure:
+          type: string
+          example: "16:00"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      required: [salle, date, heure]
+
+    ReservationInput:
+      type: object
+      properties:
+        salle:
+          type: string
+        date:
+          type: string
+        heure:
+          type: string
+      required: [salle, date, heure]

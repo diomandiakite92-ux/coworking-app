@@ -1,3 +1,7 @@
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load("./swagger.yaml");
+
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -8,6 +12,7 @@ const Reservation = require("./models/Reservation");
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // ✅ Connexion Mongo
 mongoose
